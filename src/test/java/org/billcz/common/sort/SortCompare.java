@@ -37,6 +37,8 @@ public class SortCompare {
                 MergeSorter.sort(values1);
             else if (sortName.equals("QuickSorter"))
                 QuickSorter.sort(values1);
+            else if (sortName.equals("Quick3WaySorter"))
+                Quick3WaySorter.sort(values1);
         }
 
         System.out.println(sortName + " time cost: " + ((System.currentTimeMillis() - startTime) * 1.0f / round));
@@ -58,5 +60,7 @@ public class SortCompare {
         SortCompare(values, round, "MergeSorter");
 
         SortCompare(values, round, "QuickSorter");
+
+        SortCompare(values, round, "Quick3WaySorter");
     }
 }
