@@ -7,13 +7,13 @@ import java.util.Comparator;
  * Author: billcz
  * Create time: 2018/9/19
  */
-public class PriotityQueue<Item> {
+public class PriorityQueue<Item> {
     private Item[] queues;
     private int topN;
     private Comparator comparator;
     private int size;
 
-    public PriotityQueue(int topN, Comparator<Item> comparator) {
+    public PriorityQueue(int topN, Comparator<Item> comparator) {
         this.topN = topN;
         this.comparator = comparator;
         this.queues = (Item[]) new Object[topN];
@@ -57,12 +57,12 @@ public class PriotityQueue<Item> {
 
     private void siftUp(int k, Item item) {
         while (k > 0) {
-            int parrent = (k - 1) >>> 1;
-            Item p = queues[parrent];
+            int parent = (k - 1) >>> 1;
+            Item p = queues[parent];
             if (comparator.compare(item, p) >= 0)
                 break;
             queues[k] = p;
-            k = parrent;
+            k = parent;
         }
 
         queues[k] = item;
