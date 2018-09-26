@@ -1,6 +1,6 @@
 package org.billcz.common.algorithm.search;
 
-import java.util.Collection;
+import org.billcz.common.algorithm.util.Set;
 
 /**
  * Description:
@@ -8,12 +8,17 @@ import java.util.Collection;
  * Create time: 2018/9/26
  */
 public class HashDict<K, V> implements Dict<K, V> {
+
     public void put(K k, V v) {
 
     }
 
     public V get(K k) {
         return null;
+    }
+
+    public void delete(K k) {
+
     }
 
     public int size() {
@@ -24,7 +29,7 @@ public class HashDict<K, V> implements Dict<K, V> {
         return false;
     }
 
-    public Collection<K> Keys() {
+    public Set<K> Keys() {
         return null;
     }
 }

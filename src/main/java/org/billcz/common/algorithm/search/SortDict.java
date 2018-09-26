@@ -6,4 +6,7 @@ package org.billcz.common.algorithm.search;
  * Create time: 2018/9/26
  */
 public interface SortDict<K, V> extends Dict<K, V> {
+    K getFirst();
+    K getLast();
+
 }

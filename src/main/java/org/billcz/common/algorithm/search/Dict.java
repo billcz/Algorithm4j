@@ -1,6 +1,6 @@
 package org.billcz.common.algorithm.search;
 
-import java.util.Collection;
+import org.billcz.common.algorithm.util.Set;
 
 /**
  * Description:
@@ -12,9 +12,11 @@ public interface Dict<K, V> {
 
     V get(K k);
 
+    void delete(K k);
+
     int size();
 
     boolean isEmpty();
 
-    Collection<K> Keys();
+    Set<K> Keys();
 }
