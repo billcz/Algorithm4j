@@ -17,6 +17,8 @@ public class BinaryTreeDictTest {
             sortDict.put(i, "i" + i);
         }
 
+        sortDict.remove(99);
+
         System.out.println(sortDict.getFirst());
         System.out.println(sortDict.getLast());
 

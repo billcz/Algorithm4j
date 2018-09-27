@@ -94,6 +94,9 @@ public class BinaryTreeDict<K extends Comparable<? super K>, V> implements SortD
         if (cmp > 0) node.right = remove(node.right, k);
         else if (cmp < 0) node.left = remove(node.left, k);
         else {
+            if (node.right == null) return node.left;
+            if (node.left == null) return node.right;
+
             Node t = node;
             node = min(t.right);
             node.left = t.left;
