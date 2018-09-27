@@ -42,7 +42,7 @@ public class BinaryTreeDict<K extends Comparable<? super K>, V> implements SortD
     }
 
     public int size() {
-        return 0;
+        return size(root);
     }
 
     public boolean isEmpty() {
@@ -109,7 +109,7 @@ public class BinaryTreeDict<K extends Comparable<? super K>, V> implements SortD
 
     private int size(Node node) {
         if (node == null) return 0;
-        return node.size + size(node.left) + size(node.right);
+        return node.size;
     }
 
     private Node min(Node node) {
