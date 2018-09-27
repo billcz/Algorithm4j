@@ -34,7 +34,7 @@ public class BinarySearchDict<K, V> implements SortDict<K, V> {
         int i = rank(k);
 
         if (v == null) {
-            delete(k);
+            remove(k);
             return;
         }
 
@@ -63,7 +63,7 @@ public class BinarySearchDict<K, V> implements SortDict<K, V> {
         return null;
     }
 
-    public void delete(K k) {
+    public void remove(K k) {
         int i = rank(k);
         if (i < size && compare(keys[i], k) == 0) {
             System.arraycopy(keys, i + 1, keys, i, (size - i));
@@ -86,6 +86,11 @@ public class BinarySearchDict<K, V> implements SortDict<K, V> {
 
     public Set<K> Keys() {
         return null;
+    }
+
+    public boolean containsKey(K k) {
+        int i = rank(k);
+        return i < size && keys[i] == k;
     }
 
     public K getFirst() {

@@ -12,11 +12,13 @@ public interface Dict<K, V> {
 
     V get(K k);
 
-    void delete(K k);
+    void remove(K k);
 
     int size();
 
     boolean isEmpty();
 
     Set<K> Keys();
+
+    boolean containsKey(K k);
 }

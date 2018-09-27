@@ -2,8 +2,6 @@ package org.billcz.common.algorithm.search;
 
 import org.billcz.common.algorithm.util.Set;
 
-import java.util.Collection;
-
 /**
  * Description:
  * Author: billcz
@@ -26,8 +24,12 @@ public class TreeDict<K, V> implements SortDict<K, V> {
         return null;
     }
 
-    public void delete(K k) {
+    public void remove(K k) {
 
+    }
+
+    public boolean containsKey(K k) {
+        return false;
     }
 
     public int size() {

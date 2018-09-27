@@ -24,7 +24,7 @@ public class HashDict<K, V> implements Dict<K, V> {
 
     public void put(K k, V v) {
         if (v == null) {
-            delete(k);
+            remove(k);
         }
 
         int hashCode = hash(k);
@@ -67,7 +67,7 @@ public class HashDict<K, V> implements Dict<K, V> {
         return result == null ? null : (V) result.v;
     }
 
-    public void delete(K k) {
+    public void remove(K k) {
         int hashCode = hash(k);
         Node root = tables[hashCode];
         Node pre = root;
@@ -99,6 +99,10 @@ public class HashDict<K, V> implements Dict<K, V> {
 
     public Set<K> Keys() {
         return null;
+    }
+
+    public boolean containsKey(K k) {
+        return get(k) != null;
     }
 
     private class Node<K, V> {

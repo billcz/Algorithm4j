@@ -1,9 +1,7 @@
 package org.billcz.common.search;
 
-import org.billcz.common.algorithm.search.BinarySearchDict;
 import org.billcz.common.algorithm.search.Dict;
 import org.billcz.common.algorithm.search.HashDict;
-import org.billcz.common.algorithm.search.SortDict;
 
 /**
  * Description:
@@ -18,7 +16,7 @@ public class HashDictTest {
             hashDict.put(i, "i" + i);
         }
 
-        hashDict.delete(50);
+        hashDict.remove(50);
         System.out.println(hashDict.size());
         for (int i = 0; i < 100; i++) {
             System.out.println(hashDict.get(i));
