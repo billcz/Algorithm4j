@@ -38,7 +38,7 @@ public class HashDict<K, V> implements Dict<K, V> {
 
         Node pre = node;
         while (node != null) {
-            if (node.k == k) {
+            if (k.equals(node.k)) {
                 node.v = v;
                 break;
             }
