@@ -10,23 +10,85 @@ import java.util.HashMap;
  * Create time: 2018/9/26
  */
 public class HashDict<K, V> implements Dict<K, V> {
-    private Node[] tables;
+    private Node<K, V>[] tables;
     private int size;
+    private int buckets;
+    private static int INIATIAL_CAPACITY = 100;
+
+    public HashDict() {
+        this(INIATIAL_CAPACITY);
+    }
+
+    public HashDict(int buckets) {
+        this.buckets = buckets;
+        this.tables = (Node<K, V>[]) new Node[buckets];
+    }
 
     public void put(K k, V v) {
+        if (v == null) {
+            delete(k);
+        }
+
+        int hashCode = hash(k);
+        Node node = tables[hashCode];
+
+        if (node == null) {
+            tables[hashCode] = new Node<K, V>(hashCode, k , v, null);
+            size++;
+            return;
+        }
+
+        Node pre = node;
+        while (node != null) {
+            if (node.k == k) {
+                node.v = v;
+                break;
+            }
+            pre = node;
+            node = node.next;
+        }
+
+        if (node == null) {
+            pre.next = new Node<K, V>(hashCode, k, v, null);
+            size++;
+        }
     }
 
     public V get(K k) {
         int hashCode = hash(k);
-        Node root = tables[hashCode];
-        V result = null;
-        while (root.next != null) {
+        Node node = tables[hashCode];
+        Node result = null;
+        while (node != null) {
+            if (node.k == k) {
+                result = node;
+                break;
+            }
+            node = node.next;
         }
-        return result;
+
+        return result == null ? null : (V) result.v;
     }
 
     public void delete(K k) {
+        int hashCode = hash(k);
+        Node root = tables[hashCode];
+        Node pre = root;
+        Node node = root;
+        while (node != null) {
+            if (node.k == k) {
+                break;
+            }
+            pre = node;
+            node = node.next;
+        }
 
+        size--;
+        if (node == root) {
+            tables[hashCode] = null;
+            return;
+        }
+
+        pre.next = node.next;
     }
 
     public int size() {
@@ -41,13 +103,22 @@ public class HashDict<K, V> implements Dict<K, V> {
         return null;
     }
 
-    private class Node {
+    private class Node<K, V> {
+        private int hashCode;
         private K k;
         private V v;
         private Node next;
+
+        public Node(int hashCode, K k, V v, Node next) {
+            this.hashCode = hashCode;
+            this.k = k;
+            this.v = v;
+            this.next = next;
+        }
     }
 
-    public int hash(Object o) {
-        return o == null ? 0 : o.hashCode();
+    private int hash(Object o) {
+        return o == null ? 0 : o.hashCode() % buckets;
     }
+
 }
