@@ -1,7 +1,6 @@
 package org.billcz.common.search;
 
-import org.billcz.common.algorithm.search.BinarySearchDict;
-import org.billcz.common.algorithm.search.BinaryTreeDict;
+import org.billcz.common.algorithm.search.BalanceBinaryTreeDict;
 import org.billcz.common.algorithm.search.SortDict;
 
 /**
@@ -9,9 +8,9 @@ import org.billcz.common.algorithm.search.SortDict;
  * Author: billcz
  * Create time: 2018/9/26
  */
-public class BinaryTreeDictTest {
+public class BalanceBinaryTreeDictTest {
     public static void main(String[] args) {
-        SortDict<Integer, String> sortDict = new BinaryTreeDict<Integer, String>();
+        SortDict<Integer, String> sortDict = new BalanceBinaryTreeDict<Integer, String>();
 
         for (int i = 0; i < 100; i++) {
             sortDict.put(i, "i" + i);

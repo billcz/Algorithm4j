@@ -34,7 +34,7 @@ public class BinaryTreeDict<K extends Comparable<? super K>, V> implements SortD
     }
 
     public void remove(K k) {
-        remove(root, k);
+        root = remove(root, k);
     }
 
     public boolean containsKey(K k) {
@@ -99,8 +99,8 @@ public class BinaryTreeDict<K extends Comparable<? super K>, V> implements SortD
 
             Node t = node;
             node = min(t.right);
+            node.right = deleteMin(t.right);
             node.left = t.left;
-            node.right = deleteMin(t);
         }
 
         node.size = size(node.left) + size(node.right) + 1;
