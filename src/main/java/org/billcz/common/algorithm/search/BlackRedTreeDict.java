@@ -54,6 +54,13 @@ public class BlackRedTreeDict<K extends Comparable<? super K>, V> implements Sor
     }
 
     public void remove(K k) {
+        if (!containsKey(k)) return;
+
+        if (!isRed(root.left) && !isRed(root.right))
+            root.color = RED;
+
+        root = remove(root, k);
+        if (!isEmpty()) root.color = BLACK;
 
     }
 
@@ -103,6 +110,37 @@ public class BlackRedTreeDict<K extends Comparable<? super K>, V> implements Sor
         return node;
     }
 
+    private Node remove(Node node, K k) {
+        int cmp = k.compareTo(node.k);
+        if (cmp < 0) {
+            if (!isRed(node.left) && !isRed(node.left.left))
+                node = moveRedLeft(node);
+
+            node.left = remove(node.left, k);
+        } else {
+            if (isRed(node.left))
+                node = rotateRight(node);
+
+            if (k.compareTo(node.k) == 0 && node.right == null)
+                return null;
+
+            if (!isRed(node.right) && !isRed(node.right.left))
+                node = moveRedRight(node);
+
+            if (k.compareTo(node.k) == 0) {
+                Node x = min(node.right);
+                node.k = x.k;
+                node.v = x.v;
+                node.right = deleteMin(node.right);
+            } else {
+                node.right = remove(node.right, k);
+            }
+        }
+
+        node.size = 1 + size(node.left) + size(node.right);
+        return balance(node);
+    }
+
     private boolean isRed(Node node) {
         return node != null && node.color == RED;
     }
@@ -140,16 +178,91 @@ public class BlackRedTreeDict<K extends Comparable<? super K>, V> implements Sor
         node.right.color = !node.right.color;
     }
 
+    private Node moveRedLeft(Node node) {
+        reverseColor(node);
+
+        if (isRed(node.right.left)) {
+            node.right = rotateRight(node.right);
+            node = rotateLeft(node);
+            reverseColor(node);
+        }
+
+        return node;
+
+    }
+
+    private Node moveRedRight(Node node) {
+        reverseColor(node);
+
+        if (isRed(node.left.left)) {
+            node = rotateRight(node);
+            reverseColor(node);
+        }
+
+        return node;
+    }
+
+    private Node balance(Node node) {
+        if (isRed(node.right)) node = rotateLeft(node);
+        if (isRed(node.left) && isRed(node.left.left)) node = rotateRight(node);
+        if (isRed(node.left) && isRed(node.right)) reverseColor(node);
+
+        return node;
+    }
 
     private Node min(Node node) {
         if (node.left == null) return node;
         return min(node.left);
     }
 
+    public void deleteMin() {
+        if (!isRed(root.left) && !isRed(root.right))
+            root.color = RED;
+
+        root = deleteMin(root);
+
+        if (!isEmpty()) root.color = BLACK;
+    }
+
+    private Node deleteMin(Node node) {
+        if (node.left == null) return null;
+
+        if (!isRed(node.left) && isRed(node.left.left))
+            node = moveRedLeft(node);
+
+        node.left = deleteMin(node.left);
+
+        node.size = size(node.left) + size(node.right) + 1;
+
+        return balance(node);
+    }
 
     private Node max(Node node) {
         if (node.right == null) return node;
         return max(node.right);
     }
 
+    public void deleteMax() {
+        if (!isRed(root.left) && !isRed(root.right))
+            root.color = RED;
+
+        root = deleteMax(root);
+        if (!isEmpty()) root.color = BLACK;
+    }
+
+    private Node deleteMax(Node node) {
+        if (isRed(node.left))
+            rotateRight(node);
+
+        if (node.right == null)
+            return null;
+
+        if (!isRed(node.right) && !isRed(node.right.left))
+            node = moveRedRight(node);
+
+        node.right = deleteMax(node.right);
+        node.size = size(node.left) + size(node.right) + 1;
+
+        return balance(node);
+    }
 }
