@@ -1,10 +1,10 @@
 package org.billcz.common.graph;
 
+import org.billcz.common.algorithm.graph.BFPaths;
 import org.billcz.common.algorithm.graph.DFPaths;
 import org.billcz.common.algorithm.graph.DFSearch;
 import org.billcz.common.algorithm.graph.Graph;
 
-import java.util.List;
 
 /**
  * Description:
@@ -13,12 +13,12 @@ import java.util.List;
  */
 public class GraphTest {
 
-    public static boolean isContect(Graph graph, int v, int w) {
-        DFSearch dfSearch = new DFSearch(graph, v);
+    public static boolean isContect(Graph graph, int s, int w) {
+        DFSearch dfSearch = new DFSearch(graph, s);
         return dfSearch.marked(w);
     }
 
-    public static boolean hasPath(Graph graph, int s, int v) {
+    public static boolean hasPathWithDFS(Graph graph, int s, int v) {
         DFPaths dfPaths = new DFPaths(graph, s);
         Iterable<Integer> paths = dfPaths.pathTo(v);
         if (paths != null) {
@@ -29,6 +29,19 @@ public class GraphTest {
 
         return dfPaths.hasPathTo(v);
     }
+
+    public static boolean hasPathWithBFS(Graph graph, int s, int v) {
+        BFPaths bfPaths = new BFPaths(graph, s);
+        Iterable<Integer> paths = bfPaths.pathTo(v);
+        if (paths != null) {
+            for (Integer w : paths) {
+                System.out.print(w + " ");
+            }
+        }
+
+        return bfPaths.hasPathTo(v);
+    }
+
 
     public static void main(String[] args) {
         String tinyG = "0 5\n" +
@@ -60,6 +73,7 @@ public class GraphTest {
         System.out.println(copy.toString());
 
         System.out.println(isContect(graph, 9, 1));
-        System.out.println(hasPath(graph, 2, 4));
+        System.out.println(hasPathWithDFS(graph, 2, 4));
+        System.out.println(hasPathWithBFS(graph, 2, 4));
     }
 }
