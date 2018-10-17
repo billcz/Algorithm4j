@@ -30,6 +30,10 @@ public class DiGraph {
         return E;
     }
 
+    public int degree(int v) {
+        return adjs[v].size();
+    }
+
     public void addEdge(int u, int v) {
         if (!isValidVertex(u) || !isValidVertex(v)) return;
 
