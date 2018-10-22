@@ -66,4 +66,14 @@ public class DiGraph {
 
         return sb.toString();
     }
+
+    public DiGraph reverse() {
+        DiGraph diGraph = new DiGraph(getV());
+
+        for (int v = 0; v < getV(); v++)
+            for (int w : adjs(v))
+                diGraph.addEdge(w, v);
+
+        return diGraph;
+    }
 }
