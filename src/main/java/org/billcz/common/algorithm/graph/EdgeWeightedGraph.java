@@ -9,7 +9,6 @@ import org.billcz.common.algorithm.util.LinkedListBag;
  * Create time: 2018/10/24
  */
 public class EdgeWeightedGraph {
-    private boolean[] marked;
     private int V;
     private int E;
     private Bag<Edge>[] adjs;
@@ -17,7 +16,6 @@ public class EdgeWeightedGraph {
     public EdgeWeightedGraph(int v) {
         this.V = v;
         this.E = 0;
-        this.marked = new boolean[v];
         this.adjs = new LinkedListBag[v];
 
         for (int i = 0; i < v; i++)
