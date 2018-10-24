@@ -20,7 +20,7 @@ public class Edge implements Comparable<Edge> {
         return weight;
     }
 
-    public int eighter() {
+    public int either() {
         return v;
     }
 
