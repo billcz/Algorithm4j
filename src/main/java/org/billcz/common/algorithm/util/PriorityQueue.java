@@ -30,17 +30,26 @@ public class PriorityQueue<Item> {
             siftUp(i, item);
             size++;
         } else {
-            Item first = peek();
-            if (comparator.compare(item, first) <= 0) return;
-            poll();
-            add(item);
+            Item last = last();
+            if (comparator.compare(item, last) > 0) return;
+
+            siftUp(size - 1, item);
         }
-
-
     }
 
     public Item peek() {
         return queues[0];
+    }
+
+    private Item last() {
+        return queues[size - 1];
+    }
+
+    private Item removeLast() {
+        Item last = queues[size - 1];
+        queues[size - 1] = null;
+        size--;
+        return last;
     }
 
     public Item poll() {

@@ -34,4 +34,12 @@ public class Edge implements Comparable<Edge> {
         return Double.compare(this.weight, o.weight);
     }
 
+    @Override
+    public String toString() {
+        return "Edge{" +
+                "v=" + v +
+                ", w=" + w +
+                ", weight=" + weight +
+                '}';
+    }
 }
