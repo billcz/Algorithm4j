@@ -41,17 +41,23 @@ public class IndexPriorityQueue<Item extends Comparable<? super Item>> {
         return qp[k] != -1;
     }
 
-    public Item delete(int k) {
-        if (!contains(k)) return null;
+    public boolean isEmpty() {
+        return n == 0;
+    }
 
-        Item del = vals[k];
+    public int size() {
+        return n;
+    }
+
+    public void delete(int k) {
+        if (!contains(k)) return;
+
         int index = qp[k];
         exchange(index, --n);
         siftUp(index);
         siftDown(index);
         qp[k] = -1;
         vals[k] = null;
-        return del;
     }
 
     private int compare(int i, int j) {
@@ -86,12 +92,30 @@ public class IndexPriorityQueue<Item extends Comparable<? super Item>> {
         }
     }
 
-    public Item poll() {
-        return delete(pq[0]);
+    public int pollIndex() {
+        if (n == 0) return -1;
+        int k = pq[0];
+        delete(k);
+        return k;
     }
 
-    public Item peek() {
-        return vals[pq[0]];
+    public Item pollVal() {
+        if (n == 0) return null;
+        Item val = vals[pq[0]];
+        delete(pq[0]);
+        return val;
+    }
+
+    public int peekIndex() {
+        return n == 0 ? -1 : pq[0];
+    }
+
+    public Item peekVal() {
+        return n == 0 ? null : vals[pq[0]];
+    }
+
+    public Item valsOf(int k) {
+        return n == 0 ? null : vals[pq[k]];
     }
 
     private void exchange(int i, int j) {
