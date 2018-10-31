@@ -19,5 +19,10 @@ public class IndexPriorityQueueTest {
         pq.add(0, 10);
         pq.update(3, 500);
 
+        System.out.println(pq.poll());
+        System.out.println(pq.poll());
+        System.out.println(pq.poll());
+        System.out.println(pq.peek());
+
     }
 }

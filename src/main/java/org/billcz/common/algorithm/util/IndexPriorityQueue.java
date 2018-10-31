@@ -14,7 +14,7 @@ public class IndexPriorityQueue<Item extends Comparable<? super Item>> {
 
     public IndexPriorityQueue(int maxN) {
         this.maxN = maxN;
-        this.vals = (Item[]) new Object[maxN];
+        this.vals = (Item[]) new Comparable[maxN];
         this.pq = new int[maxN];
         this.qp = new int[maxN];
 
@@ -26,31 +26,42 @@ public class IndexPriorityQueue<Item extends Comparable<? super Item>> {
         qp[k] = n;
         pq[n] = k;
         vals[k] = item;
-        siftUp(n, item);
+        siftUp(n);
         n++;
     }
 
     public void update(int k, Item item) {
         vals[k] = item;
 
-        siftUp(qp[k], item);
-        siftDown(qp[k], item);
+        siftUp(qp[k]);
+        siftDown(qp[k]);
     }
 
-    public void delete(int k) {
-        vals[k] = null;
-        exchange(qp[k], --n);
+    public boolean contains(int k) {
+        return qp[k] != -1;
+    }
+
+    public Item delete(int k) {
+        if (!contains(k)) return null;
+
+        Item del = vals[k];
+        int index = qp[k];
+        exchange(index, --n);
+        siftUp(index);
+        siftDown(index);
         qp[k] = -1;
-
-
+        vals[k] = null;
+        return del;
     }
 
-    private void siftUp(int i, Item item) {
+    private int compare(int i, int j) {
+        return vals[pq[i]].compareTo(vals[pq[j]]);
+    }
+
+    private void siftUp(int i) {
         while (i > 0) {
             int parent = (i - 1) >>> 1;
-            Item p = vals[pq[i]];
-
-            if (item.compareTo(p)>= 0)
+            if (compare(i, parent) >= 0)
                 break;
 
             exchange(i, parent);
@@ -58,23 +69,29 @@ public class IndexPriorityQueue<Item extends Comparable<? super Item>> {
         }
     }
 
-    private void siftDown(int i, Item item) {
+    private void siftDown(int i) {
         int half = n >>> 1;
         while (i < half) {
             int child = (i << 1)  + 1;
-            Item c = vals[pq[child]];
             int right = child + 1;
-            if (right < n && c.compareTo(vals[pq[right]]) > 0) {
+            if (right < n && compare(child, right) > 0) {
                 child = right;
-                c = vals[pq[child]];
             }
 
-            if (item.compareTo(c) <= 0)
+            if (compare(i, child) <= 0)
                 break;
 
             exchange(i, child);
             i = child;
         }
+    }
+
+    public Item poll() {
+        return delete(pq[0]);
+    }
+
+    public Item peek() {
+        return vals[pq[0]];
     }
 
     private void exchange(int i, int j) {
