@@ -43,5 +43,7 @@ public class LazyPrimMSTTest {
         for (Edge e : mst) {
             System.out.println(e);
         }
+
+        System.out.println("weight: " + lazyPrimMST.weight());
     }
 }

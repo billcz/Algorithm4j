@@ -43,5 +43,6 @@ public class PrimMSTTest {
         for (Edge e : mst) {
             System.out.println(e);
         }
+        System.out.println("weight: " + primMST.weight());
     }
 }
