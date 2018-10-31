@@ -44,4 +44,21 @@ public class EdgeWeightedGraph {
     public Iterable<Edge> adjs(int v) {
         return adjs[v];
     }
+
+    public Iterable<Edge> edges() {
+        Bag<Edge> bags = new LinkedListBag<Edge>();
+
+        for (int v = 0; v < V; v++) {
+            int selfLoops = 0;
+            for (Edge e : adjs(v)) {
+                int w = e.other(v);
+                if (w > v) bags.add(e);
+                else if (w == v) {
+                    if (selfLoops % 2 == 0) bags.add(e);
+                    selfLoops++;
+                }
+            }
+        }
+        return bags;
+    }
 }
