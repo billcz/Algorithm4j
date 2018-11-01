@@ -11,19 +11,19 @@ import org.billcz.common.algorithm.util.LinkedListBag;
 public class EdgeWeightedDiGraph {
     private int V;
     private int E;
-    private Bag<Edge>[] adjs;
+    private Bag<DirectedEdge>[] adjs;
 
     public EdgeWeightedDiGraph(int V) {
         this.V = V;
         this.adjs = new LinkedListBag[V];
 
         for (int i = 0; i < V; i++)
-            this.adjs[i] = new LinkedListBag<Edge>();
+            this.adjs[i] = new LinkedListBag<DirectedEdge>();
 
     }
 
-    public void addEdge(Edge edge) {
-        int v = edge.either();
+    public void addEdge(DirectedEdge edge) {
+        int v = edge.from();
 
         adjs[v].add(edge);
         E++;
@@ -37,24 +37,25 @@ public class EdgeWeightedDiGraph {
         return E;
     }
 
-    public Iterable<Edge> adjs(int v) {
+    public Iterable<DirectedEdge> adjs(int v) {
         return adjs[v];
     }
 
-    public Iterable<Edge> edges() {
-        Bag<Edge> bags = new LinkedListBag<Edge>();
+    public Iterable<DirectedEdge> edges() {
+        Bag<DirectedEdge> bags = new LinkedListBag<DirectedEdge>();
 
         for (int v = 0; v < V; v++) {
             int selfLoops = 0;
-            for (Edge e : adjs(v)) {
-                int w = e.other(v);
-                if (w > v) bags.add(e);
-                else if (w == v) {
+            for (DirectedEdge e : adjs(v)) {
+                int w = e.to();
+                bags.add(e);
+                if (w == v) {
                     if (selfLoops % 2 == 0) bags.add(e);
                     selfLoops++;
                 }
             }
         }
+
         return bags;
     }
 
