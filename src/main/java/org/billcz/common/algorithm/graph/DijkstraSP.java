@@ -1,6 +1,8 @@
 package org.billcz.common.algorithm.graph;
 
 import org.billcz.common.algorithm.util.IndexPriorityQueue;
+import org.billcz.common.algorithm.util.LinkedListStack;
+import org.billcz.common.algorithm.util.Stack;
 
 /**
  * Description:
@@ -40,6 +42,25 @@ public class DijkstraSP {
             if (minPQ.contains(w)) minPQ.update(w, distTo[w]);
             else minPQ.add(w, distTo[w]);
         }
+    }
+
+    public boolean hasPathTo(int v) {
+        return distTo[v] < Double.POSITIVE_INFINITY;
+    }
+
+    public double distTo(int v) {
+        return distTo[v];
+    }
+
+    public Iterable<DirectedEdge> pathTo(int v) {
+        if (!hasPathTo(v)) return null;
+
+        Stack<DirectedEdge> path = new LinkedListStack<DirectedEdge>();
+        for (DirectedEdge e = edgeTo[v]; e != null; e = edgeTo[e.from()]) {
+            path.push(e);
+        }
+
+        return path;
     }
 
 }
