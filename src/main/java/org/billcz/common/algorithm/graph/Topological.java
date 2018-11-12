@@ -17,6 +17,15 @@ public class Topological {
         }
     }
 
+    public Topological(EdgeWeightedDiGraph diGraph) {
+        DirectedCycle directedCycle = new DirectedCycle(diGraph);
+
+        if (!directedCycle.hasCycle()) {
+            DepthFirstOrder depthFirstOrder = new DepthFirstOrder(diGraph);
+            order = depthFirstOrder.reversePost();
+        }
+    }
+
     public Iterable<Integer> order() {
         return order;
     }
